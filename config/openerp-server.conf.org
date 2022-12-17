@@ -1,5 +1,5 @@
 [options]
-addons_path = /usr/lib/python2.7/dist-packages/openerp/addons,/mnt/extra-addons/account-financial-reporting,/mnt/extra-addons/account-invoice-reporting,/mnt/extra-addons/connector,/mnt/extra-addons/connector-ecommerce,/mnt/extra-addons/connector-magento,/mnt/extra-addons/e-commerce,/mnt/extra-addons/knowledge,/mnt/extra-addons/l10n-spain,/mnt/extra-addons/partner-contact,/mnt/extra-addons/product-attribute,/mnt/extra-addons/reporting-engine,/mnt/extra-addons/sale-reporting,/mnt/extra-addons/sale-workflow,/mnt/extra-addons/server-tools,/mnt/extra-addons/webkit-tools,/mnt/extra-addons/zzwxrchi
+addons_path = /usr/lib/python2.7/dist-packages/openerp/addons,/mnt/extra-addons
 data_dir = /var/lib/odoo
 auto_reload = True
 admin_passwd = admin

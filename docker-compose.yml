@@ -1,16 +1,23 @@
 version: '3.1'
 
+networks:
+  odoo8_net:
+    ipam:
+      config:
+        - subnet: 123.45.0.0/24
+
 services:
   
   db_8:
-    image: postgres:9.4
+    image: postgres:9.3
     restart: always
     container_name: db_8
     networks:
-      - pg
+      odoo8_net:
+        ipv4_address: 123.45.0.2 
     environment:
-      POSTGRES_USER: odoo8
-      POSTGRES_PASSWORD: odoo8
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
 
   odoo8:
     build:
@@ -19,19 +26,19 @@ services:
     restart: always
     container_name: odoo_8
     ports:
-      - 8070:8069
+      - 9069:8069
+      - 9071:8071
     networks:
-      - pg
+      odoo8_net:
+        ipv4_address: 123.45.0.4
     links:
       - db_8:db
     environment:
-      USER: odoo8
-      PASSWORD: odoo8
+      USER: odoo
+      PASSWORD: odoo
     volumes:
       - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
       # crear las rutas locales
       # - ~/Code/addons/8.0:/mnt/extra-addons
       # - ~/Code/addons/8.0/testing:/mnt/extra-addons
-
-networks:
-  pg:
