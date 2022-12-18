@@ -40,13 +40,13 @@ RUN set -x; \
         && pip install -U "pip<21.0" "setuptools<45"
 
 RUN set -x; \
-        find /odoo_requirements -name "*requirements.txt" -type f -exec pip install -r '{}' ';' #\
+        find /odoo_requirements -name "*requirements.txt" -type f -exec pip install -r '{}' ';'
         #&& /install/purge_dev_package_and_cache.sh
 
 RUN set -x; \
         apt-get update \
-        npm install -y --force-yes -g less less-plugin-clean-css \
-        && ln -s /usr/bin/nodejs /usr/bin/node #\
+        && npm install -y --force-yes -g less less-plugin-clean-css \
+        && ln -s /usr/bin/nodejs /usr/bin/node \
         && curl -o wkhtmltox.deb -SL http://nightly.odoo.com/deb/jessie/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb \
         && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
