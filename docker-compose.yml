@@ -7,37 +7,45 @@ networks:
         - subnet: 123.45.0.0/24
 
 services:
-  db_8:
+  db:
     image: postgres:9.4
-    restart: always
-    container_name: db_8
+    volumes:
+      - db-data:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432/tcp
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
     networks:
       odoo8_net:
-        ipv4_address: 123.45.0.2 
-    environment:
-      POSTGRES_USER: odoo
-      POSTGRES_PASSWORD: odoo
+        ipv4_address: 123.45.0.2
+    restart: always
 
-  odoo8:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
     container_name: odoo_8
-    ports:
-      - 9069:8069
-      - 9071:8071
+    depends_on:
+      - db
+    ports:  # use same port setting in config/odoo.conf
+      - "9069:8069/tcp"
+      - "9071:8071/tcp"
+    volumes:
+      - web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
     networks:
       odoo8_net:
         ipv4_address: 123.45.0.4
-    links:
-      - db_8:db
     environment:
       USER: odoo
       PASSWORD: odoo
-    volumes:
-      - ./config:/etc/odoo
-      - ./addons:/mnt/extra-addons
-      # crear las rutas locales
-      # - ~/Code/addons/8.0:/mnt/extra-addons
-      # - ~/Code/addons/8.0/testing:/mnt/extra-addons
+    restart: always
+
+volumes:
+  db-data:
+    driver: local
+  web-data:
+    driver: local
