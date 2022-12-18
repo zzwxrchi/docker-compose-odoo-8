@@ -7,9 +7,8 @@ networks:
         - subnet: 123.45.0.0/24
 
 services:
-  
   db_8:
-    image: postgres:9.3
+    image: postgres:9.4
     restart: always
     container_name: db_8
     networks:
