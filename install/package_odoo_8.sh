@@ -13,7 +13,9 @@ apt-get install -y --force-yes --no-install-recommends \
     ntp \
     python-support \
     python-pyinotify \
-    python-pip
+    python-pip \
+    xfonts-base \
+    xfonts-75dpi
 #    python-renderpm 
 #    node-clean-css \
 #    node-less \
@@ -29,6 +31,4 @@ apt-get install -y --force-yes --no-install-recommends \
 #    python \
 #    python-libxslt1 \
 #    python-pip \
-#    xfonts-75dpi \
-#    xfonts-base \
 #    tcl expect
