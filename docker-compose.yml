@@ -8,7 +8,8 @@ networks:
 
 services:
   db:
-    image: postgres:9.4
+    image: postgres:9.6
+    container_name: odoo8_db
     volumes:
       - db-data:/var/lib/postgresql/data/pgdata
     ports:
@@ -26,7 +27,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: odoo_8
+    container_name: odoo8_web
     depends_on:
       - db
     ports:  # use same port setting in config/odoo.conf
@@ -40,8 +41,8 @@ services:
       odoo8_net:
         ipv4_address: 123.45.0.4
     environment:
-      USER: odoo
-      PASSWORD: odoo
+      - USER=odoo
+      - PASSWORD:odoo
     restart: always
 
 volumes:
