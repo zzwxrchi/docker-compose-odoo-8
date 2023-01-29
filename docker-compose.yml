@@ -15,6 +15,7 @@ services:
     ports:
       - 5432:5432/tcp
     environment:
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
       - PGDATA=/var/lib/postgresql/data/pgdata
@@ -37,12 +38,11 @@ services:
       - web-data:/var/lib/odoo
       - ./config:/etc/odoo
       - ./addons:/mnt/extra-addons
+    environment:
+      - RUNNING_ENV=dev
     networks:
       odoo8_net:
         ipv4_address: 123.45.0.4
-    environment:
-      - USER=odoo
-      - PASSWORD:odoo
     restart: always
 
 volumes:

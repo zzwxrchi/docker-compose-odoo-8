@@ -26,7 +26,7 @@ psycogreen==1.0
 psycopg2==2.7.1
 pyPdf==1.13
 pycups==1.9.73
-pydot==1.0.2
+pydot==1.1.0
 pyparsing==2.1.0
 pyserial==2.7
 python-dateutil==1.5
@@ -44,6 +44,11 @@ vatnumber==1.2
 vobject==0.6.6
 wsgiref==0.1.2
 xlwt==0.7.5
+
+# for magento connector
+magento
+# for other
+psycopg2-binary
 
 # Migration tools
 ruamel.yaml==0.16.13

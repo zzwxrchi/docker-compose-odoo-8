@@ -4,12 +4,10 @@ MAINTAINER zzwxrchi
 # create the working directory and a place to set the logs (if wanted)
 RUN adduser --system --home=/opt/odoo --group odoo
 ENV odoo8_path /opt/odoo/8.0
-USER odoo
 COPY ./backup/server ${odoo8_path}/server
 COPY ./pip_requirements ${odoo8_path}/pip_requirements
 COPY ./install ${odoo8_path}/install
 
-USER root
 # Set Locale it needs to be present when installing python packages.
 # Otherwise it can lead to issues. eg. when reading the setup.cfg
 ENV LANG=C.UTF-8 \
@@ -61,22 +59,28 @@ RUN set -x; \
 # RUN mv /usr/lib/python2.7/dist-packages/openerp/addons/l10n_es /usr/lib/python2.7/dist-packages/openerp/addons/l10n_es_org
 
 COPY ./entrypoint.sh /
-COPY ./config/openerp-server.conf /etc/odoo/
-RUN chown odoo /etc/odoo/openerp-server.conf
+COPY ./config/odoo8-server.conf /etc/odoo/
+RUN chown odoo /etc/odoo/odoo8-server.conf
 
 # Set permissions and Mount /var/lib/odoo to allow restoring filestore and /mnt/extra-addons for users addons
-RUN mkdir -p /mnt/extra-addons \
-        && chown -R odoo /mnt/extra-addons
-RUN mkdir -p /var/lib/odoo \
-        && chown -R odoo /var/lib/odoo
-
+RUN mkdir -p /mnt/extra-addons
+RUN mkdir -p /var/lib/odoo
 VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 
-ENV ODOO_VERSION 8.0
+RUN mkdir -p ${odoo8_path}/logs
+
+# config file
+RUN chown -R odoo:odoo /etc/odoo
+# data files
+RUN chown -R odoo:odoo /var/lib/odoo
+# extra addons
+RUN chown -R odoo:odoo /mnt/extra-addons
+# server source home
+RUN chown -R odoo:odoo ${odoo8_path}
 
 EXPOSE 8069 8071
 
-ENV OPENERP_SERVER /etc/odoo/openerp-server.conf
+ENV OPENERP_SERVER /etc/odoo/odoo8-server.conf
 
 USER odoo
 
