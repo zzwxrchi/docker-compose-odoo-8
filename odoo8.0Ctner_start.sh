@@ -1,1 +1,0 @@
-/home/ma/script/odoo/odoo8.0Ctner_start.sh
